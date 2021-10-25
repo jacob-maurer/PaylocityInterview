@@ -3,6 +3,7 @@ using PaylocityInterview.Services;
 using PaylocityInterview.DBModels;
 using System.Collections.Generic;
 using System.Linq;
+using PaylocityInterview.Objects;
 
 namespace PaylocityInterview.Controllers
 {
@@ -11,10 +12,12 @@ namespace PaylocityInterview.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly EmployeeService _employeeService;
+        private readonly EmployeeBenefitService _employeeBenefitService;
 
         public EmployeeController(EmployeeDBContext context)
         {
             _employeeService = new EmployeeService(context);
+            _employeeBenefitService = new EmployeeBenefitService();
         }
 
         [HttpGet]
@@ -37,9 +40,9 @@ namespace PaylocityInterview.Controllers
 
         [HttpPost]
         [Route("GetBenefitCost/")]
-        public double GetBenefitCost([FromBody] Employee employee)
+        public EmployeeBenefitDetail GetBenefitCost([FromBody] Employee employee)
         {
-            return _employeeService.GetBenefitCost(employee);
+            return _employeeBenefitService.CalculateEmployeeBenefitDetail(employee);
         }
 
         [HttpPut("{id}")]

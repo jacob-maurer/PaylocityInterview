@@ -46,7 +46,7 @@ export class Employee extends Component {
                             <td>{employee.id}</td>
                             <td>{employee.fullName}</td>
                             <td>{employee.dependents.length}</td>
-                            <td>{employee.benefitCost}</td>
+                            <td>{employee.benefitCost.totalBenefitCost}</td>
                             <td style={{ whiteSpace: 'nowrap' }}>
                                 <Link to={`/employee/edit/${employee.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
                                 <button onClick={(e) => this.deleteEmployee(employee.id, e)} className="btn btn-sm btn-danger btn-delete-employee" disabled={employee.isDeleting}>

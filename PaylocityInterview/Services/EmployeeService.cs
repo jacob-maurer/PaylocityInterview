@@ -7,6 +7,8 @@ namespace PaylocityInterview.Services
 {
     public class EmployeeService
     {
+        private const int PAYCHECK_AMOUNT_EMPLOYEE = 2000;
+
         private readonly EmployeeDataAccess _employeeDataAccess;
         private readonly EmployeeBenefitService _employeeBenefitService;
 
@@ -21,7 +23,11 @@ namespace PaylocityInterview.Services
         {
             var employees = _employeeDataAccess.GetEmployeesWithDependents().ToList();
 
-            employees.ForEach(emp => emp.BenefitCost = _employeeBenefitService.CalculateBenefitCost(emp));
+            employees.ForEach(emp =>
+            {
+                emp.BenefitCost = _employeeBenefitService.CalculateEmployeeBenefitDetail(emp);
+                emp.PayCheckAmount = PAYCHECK_AMOUNT_EMPLOYEE;
+            });
 
             return employees;
         }
@@ -30,7 +36,8 @@ namespace PaylocityInterview.Services
         {
             _employeeDataAccess.AddEmployee(employee);
 
-            employee.BenefitCost = _employeeBenefitService.CalculateBenefitCost(employee);
+            employee.BenefitCost = _employeeBenefitService.CalculateEmployeeBenefitDetail(employee);
+            employee.PayCheckAmount = PAYCHECK_AMOUNT_EMPLOYEE;
 
             return employee;
         }
@@ -42,21 +49,18 @@ namespace PaylocityInterview.Services
 
             _employeeDataAccess.UpdateEmployee(employee);
 
-            employee.BenefitCost = _employeeBenefitService.CalculateBenefitCost(employee);
+            employee.BenefitCost = _employeeBenefitService.CalculateEmployeeBenefitDetail(employee);
+            employee.PayCheckAmount = PAYCHECK_AMOUNT_EMPLOYEE;
 
             return employee;
-        }
-
-        public double GetBenefitCost(Employee employee)
-        {
-            return _employeeBenefitService.CalculateBenefitCost(employee);
         }
 
         public Employee GetEmployeeById(int employeeId)
         {
             var employee = _employeeDataAccess.GetEmployeeWithDependentsById(employeeId);
 
-            employee.BenefitCost = _employeeBenefitService.CalculateBenefitCost(employee);
+            employee.BenefitCost = _employeeBenefitService.CalculateEmployeeBenefitDetail(employee);
+            employee.PayCheckAmount = PAYCHECK_AMOUNT_EMPLOYEE;
 
             return employee;
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PaylocityInterview.DBModels;
+using PaylocityInterview.Objects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,7 +19,10 @@ namespace PaylocityInterview.DBModels
         public string FullName { get; set; }
 
         [NotMapped]
-        public double BenefitCost { get; set; }
+        public EmployeeBenefitDetail BenefitCost { get; set; }
+
+        [NotMapped]
+        public double PayCheckAmount { get; set; }
 
         public ICollection<Dependent> Dependents { get; set; }
     }
